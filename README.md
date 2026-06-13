@@ -37,6 +37,7 @@ The pipeline works as follows:
 │   └── best_model_three_class_classification_SVM (RBF)_China_Teknon.pkl
 ├── notebooks/
 │   ├── project_code.ipynb      Main analysis and modeling notebook
+│   ├── run_demo.ipynb          Lightweight demo on the held-out Teknon test set
 │   └── qrs_signals_function/   Per patient QRS signal arrays (.npy)
 ├── output/                     Generated figures and result plots
 ├── soo_standarization/         Standardized Site of Origin (SOO) tables (.csv)
@@ -87,6 +88,35 @@ jupyter notebook notebooks/project_code.ipynb
 regenerates the metrics reported below, and saves the figures in `output/` and
 the `best_model_*.pkl` files in `models/`. The `data/` directory must be present
 alongside the notebook (it is included in this repository).
+
+## Quick demo
+
+`notebooks/run_demo.ipynb` is a lightweight script to inspect the final models
+without retraining anything. It reproduces, in a few seconds, the held-out
+evaluation of the two saved classifiers on the clinical Teknon cohort.
+
+The notebook:
+
+1. Loads the corrected Teknon dataset (`data/full_data_corrected_2024.pkl`) and
+   rebuilds the clinical table, replacing the raw SOO and chamber labels with the
+   standardized taxonomy from `soo_standarization/`.
+2. Loads the two final classifiers from `models/`
+   (`best_model_binary_classification_Extra Trees_China_Teknon.pkl` and
+   `best_model_three_class_classification_SVM (RBF)_China_Teknon.pkl`).
+3. Builds the feature matrix from the 12 ECG leads (each QRS resampled to 10
+   samples per lead and L1 normalized), holds out the last 20% of patients as the
+   test set, and runs both models on it.
+4. Prints the per class `classification_report` and plots the confusion matrices
+   for the binary (LV vs RV) and three class (RVOT, Cusp, LVOT) tasks.
+
+Run it after installing the requirements:
+
+```bash
+jupyter notebook notebooks/run_demo.ipynb
+```
+
+It only reads the pickled models and the dataset, so no training step or `sak`
+dependency is required.
 
 ## Results
 
