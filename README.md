@@ -37,15 +37,16 @@ outcomes from the processed signals.
 
 ## Requirements
 
-The notebook uses the standard Python data-science stack, typically including:
-
-- `numpy`, `pandas`, `scipy`
-- `scikit-learn`
-- `matplotlib`
-- `jupyter`
-
-Install them with:
+The project was developed with **Python 3.8** (course kernel `CompBioMed26`).
+All dependencies are listed in [`requirements.txt`](requirements.txt):
 
 ```bash
-pip install numpy pandas scipy scikit-learn matplotlib jupyter
+pip install -r requirements.txt
 ```
+
+Main libraries: `numpy`, `pandas`, `scipy`, `scikit-learn`, `imbalanced-learn`,
+`xgboost`, `torch`, `scikit-image`, `shap`, `matplotlib`, `seaborn`, `tqdm`.
+
+> **Note:** the notebook also imports `sak`, a signal-processing library
+> provided by the CompBioMed course environment. It is not a standard PyPI
+> package and must be installed from the course-provided source.

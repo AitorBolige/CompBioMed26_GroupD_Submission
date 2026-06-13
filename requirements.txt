@@ -1,0 +1,34 @@
+# Python 3.8 (course kernel: CompBioMed26)
+# Install with: pip install -r requirements.txt
+
+# Core scientific stack
+numpy
+pandas
+scipy
+
+# Machine learning
+scikit-learn
+imbalanced-learn
+xgboost
+
+# Deep learning
+torch
+
+# Image / signal processing
+scikit-image
+
+# Model interpretability
+shap
+
+# Visualization
+matplotlib
+seaborn
+
+# Utilities
+tqdm
+
+# Course-provided signal-processing library (NOT on PyPI).
+# Provided by the CompBioMed course environment. Install from the
+# course-provided source, e.g.:
+#   pip install git+https://github.com/guillermo-jimenez/sak.git
+# sak
