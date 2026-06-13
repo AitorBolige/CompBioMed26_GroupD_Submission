@@ -28,7 +28,4 @@ seaborn
 tqdm
 
 # Course-provided signal-processing library (NOT on PyPI).
-# Provided by the CompBioMed course environment. Install from the
-# course-provided source, e.g.:
-#   pip install git+https://github.com/guillermo-jimenez/sak.git
-# sak
+# Provided by the CompBioMed course environment.
