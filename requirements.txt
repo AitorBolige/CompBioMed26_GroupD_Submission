@@ -24,6 +24,10 @@ shap
 matplotlib
 seaborn
 
+# Notebook execution
+jupyter
+nbconvert
+
 # Utilities
 tqdm
 
