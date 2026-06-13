@@ -64,6 +64,11 @@ installed from the course provided source.
 
 ## Reproducing the results
 
+The commands below run from a clean machine and reproduce the held-out Teknon
+evaluation reported above using the two saved models. No prior setup, no `sak`
+library and no training step are required: the data and the fitted
+`best_model_*.pkl` files are already included in the repository.
+
 ```bash
 # 1. Clone the repository
 git clone https://github.com/AitorBolige/DataScience-Seminars.git
@@ -75,48 +80,38 @@ conda activate soo
 
 # 3. Install dependencies
 pip install -r requirements.txt
-# plus the course provided 'sak' library (see note above)
 
-# 4a. Reproduce everything by running the notebook top to bottom
-jupyter nbconvert --to notebook --execute --inplace notebooks/project_code.ipynb
-
-# 4b. Or open it interactively and run all cells in order
-jupyter notebook notebooks/project_code.ipynb
+# 4. Reproduce the results: execute the demo notebook top to bottom
+jupyter nbconvert --to notebook --execute --inplace notebooks/run_demo.ipynb
 ```
 
-`project_code.ipynb` covers the full analysis, trains the final classifiers,
-regenerates the metrics reported below, and saves the figures in `output/` and
-the `best_model_*.pkl` files in `models/`. The `data/` directory must be present
-alongside the notebook (it is included in this repository).
+`run_demo.ipynb` loads the corrected Teknon dataset
+(`data/full_data_corrected_2024.pkl`), replaces the raw labels with the
+standardized SOO and chamber taxonomy from `soo_standarization/`, builds the
+12-lead feature matrix (each QRS resampled to 10 samples per lead and L1
+normalized), holds out the last 20% of patients as the test set, and runs the
+two saved classifiers from `models/` on it. It prints the per class
+`classification_report` and plots the confusion matrices for the binary
+(LV vs RV) and three class (RVOT, Cusp, LVOT) tasks.
 
-## Quick demo
-
-`notebooks/run_demo.ipynb` is a lightweight script to inspect the final models
-without retraining anything. It reproduces, in a few seconds, the held-out
-evaluation of the two saved classifiers on the clinical Teknon cohort.
-
-The notebook:
-
-1. Loads the corrected Teknon dataset (`data/full_data_corrected_2024.pkl`) and
-   rebuilds the clinical table, replacing the raw SOO and chamber labels with the
-   standardized taxonomy from `soo_standarization/`.
-2. Loads the two final classifiers from `models/`
-   (`best_model_binary_classification_Extra Trees_China_Teknon.pkl` and
-   `best_model_three_class_classification_SVM (RBF)_China_Teknon.pkl`).
-3. Builds the feature matrix from the 12 ECG leads (each QRS resampled to 10
-   samples per lead and L1 normalized), holds out the last 20% of patients as the
-   test set, and runs both models on it.
-4. Prints the per class `classification_report` and plots the confusion matrices
-   for the binary (LV vs RV) and three class (RVOT, Cusp, LVOT) tasks.
-
-Run it after installing the requirements:
+To open it interactively instead of executing it in batch:
 
 ```bash
 jupyter notebook notebooks/run_demo.ipynb
 ```
 
-It only reads the pickled models and the dataset, so no training step or `sak`
-dependency is required.
+### Full analysis (optional)
+
+`project_code.ipynb` covers the complete pipeline: it trains the six classifiers
+from scratch, regenerates every figure in `output/`, and rewrites the
+`best_model_*.pkl` files in `models/`. It additionally requires the course
+provided `sak` signal processing library (see the note in
+[Requirements](#requirements)), which is not on PyPI, so it cannot be installed
+on a clean machine without that source.
+
+```bash
+jupyter nbconvert --to notebook --execute --inplace notebooks/project_code.ipynb
+```
 
 ## Results
 
